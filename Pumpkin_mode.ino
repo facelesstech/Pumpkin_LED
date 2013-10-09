@@ -1,6 +1,5 @@
 
 const int button1 = 12;
-//const int buttonm = A1;
 
 // Variables will change:
 int buttonPushCounterm = 0;
@@ -17,6 +16,7 @@ int fadeAmount = 5;    // how many points to fade the LED by
 void setup() {
   // initialize the button pin as a input:
   pinMode(button1, INPUT);
+  // initialize the LED pin as a output:
   pinMode(redPin1, OUTPUT);
   pinMode(redPin2, OUTPUT);
   pinMode(yellowPin3, OUTPUT);
@@ -53,7 +53,7 @@ void loop() {
   lastButtonStatem = buttonStatem;
 
   if (buttonPushCounterm == 1) {
-    // Candle mode
+     // Candle mode
      analogWrite(redPin1, random(10)+255);
      analogWrite(redPin2, random(10)+255);
      analogWrite(yellowPin3, random(10)+255);
@@ -70,7 +70,7 @@ void loop() {
     if (brightness == 0 || brightness == 255) {
     fadeAmount = -fadeAmount ; 
   }     
-  // wait for 30 milliseconds to see the dimming effect    
+  // wait for 50 milliseconds to see the dimming effect    
   delay(50);            
   }
   
@@ -127,7 +127,7 @@ void loop() {
   }
   
   if (buttonPushCounterm == 6) {
-    
+    // Night rider mode
     digitalWrite(yellowPin4, LOW);
     digitalWrite(redPin1, LOW);
     digitalWrite(redPin2, LOW);
