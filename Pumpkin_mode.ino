@@ -12,6 +12,28 @@ int yellowPin4 = 10;
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
+// long delays section
+long waitUntilpulse1 = 0;
+long waitUntilpulse2 = 20;
+
+long waitUntilpolice1 = 0;
+long waitUntilpolice2 = 200;
+
+long waitUntilchase1 = 0;
+long waitUntilchase2 = 100;
+long waitUntilchase3 = 200;
+long waitUntilchase4 = 300;
+
+long waitUntilstrobe1 = 0;
+long waitUntilstrobe2 = 20;
+
+long waitUntilnight1 = 0;
+long waitUntilnight2 = 100;
+long waitUntilnight3 = 200;
+long waitUntilnight4 = 300;
+long waitUntilnight5 = 400;
+long waitUntilnight6 = 500;
+
 
 void setup() {
   // initialize the button pin as a input:
@@ -62,102 +84,142 @@ void loop() {
   
   if (buttonPushCounterm == 2) {
     // Pulse mode
-    analogWrite(redPin1, brightness);
-    analogWrite(redPin2, brightness);
-    analogWrite(yellowPin3, brightness);
-    analogWrite(yellowPin4, brightness);
-    brightness = brightness + fadeAmount;
+    if (millis() >= waitUntilpulse1) {
+      analogWrite(redPin1, brightness);
+      analogWrite(redPin2, brightness);
+      analogWrite(yellowPin3, brightness);
+      analogWrite(yellowPin4, brightness);
+      brightness = brightness + fadeAmount;
+      waitUntilpulse1 += 40;
+    }
     if (brightness == 0 || brightness == 255) {
-    fadeAmount = -fadeAmount ; 
-  }     
-  // wait for 50 milliseconds to see the dimming effect    
-  delay(50);            
+      fadeAmount = -fadeAmount ; 
+    }
+    if (millis() >= waitUntilpulse2) {
+      analogWrite(redPin1, brightness);
+      analogWrite(redPin2, brightness);
+      analogWrite(yellowPin3, brightness);
+      analogWrite(yellowPin4, brightness);
+      brightness = brightness + fadeAmount;
+      waitUntilpulse2 += 40;
+    }
+    if (brightness == 0 || brightness == 255) {
+      fadeAmount = -fadeAmount ; 
+    }   
   }
   
   if (buttonPushCounterm == 3) {
     // Police flashing mode
-    digitalWrite(redPin2, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(redPin1, HIGH);
-    digitalWrite(yellowPin3, HIGH);
-    delay(200);
-    digitalWrite(redPin2, HIGH);
-    digitalWrite(yellowPin4, HIGH);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(yellowPin3, LOW);
-    delay(200);
+    if (millis() >= waitUntilpolice1) {
+      digitalWrite(redPin2, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(redPin1, HIGH);
+      digitalWrite(yellowPin3, HIGH);
+      waitUntilpolice1 += 400;
+    }
+    if (millis() >= waitUntilpolice2) {
+      digitalWrite(redPin2, HIGH);
+      digitalWrite(yellowPin4, HIGH);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(yellowPin3, LOW);
+      waitUntilpolice2 += 400;
+    }
   }
   
   if (buttonPushCounterm == 4) {
     // Chase mode
-    digitalWrite(redPin2, LOW);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(yellowPin3, HIGH);
-    delay(200);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(redPin1, HIGH);
-    delay(200);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(yellowPin4, HIGH);
-    delay(200);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(redPin2, HIGH);
-    delay(200);
+    if (millis() >= waitUntilchase1) {
+      digitalWrite(redPin2, LOW);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(yellowPin3, HIGH);
+      waitUntilchase1 += 400;  
+      }
+    if (millis() >= waitUntilchase2) {
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(redPin1, HIGH);
+      waitUntilchase2 += 400;
+     }
+    if (millis() >= waitUntilchase3) {
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(yellowPin4, HIGH);
+      waitUntilchase3 += 400;
+     }
+    if (millis() >= waitUntilchase4) {
+      digitalWrite(redPin1, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(redPin2, HIGH);
+      waitUntilchase4 += 400;
+    }
   }
   
   if (buttonPushCounterm == 5) {
     // Strobe mode
-    digitalWrite(redPin1, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(yellowPin4, LOW);
-    delay(50);
-    digitalWrite(redPin1, HIGH);
-    digitalWrite(redPin2, HIGH);
-    digitalWrite(yellowPin3, HIGH);
-    digitalWrite(yellowPin4, HIGH);
-    delay(50);
+    if (millis() >= waitUntilstrobe1) {
+      digitalWrite(redPin1, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(yellowPin4, LOW);
+      waitUntilstrobe1 += 40;
+    }
+    if (millis() >= waitUntilstrobe2) {
+      digitalWrite(redPin1, HIGH);
+      digitalWrite(redPin2, HIGH);
+      digitalWrite(yellowPin3, HIGH);
+      digitalWrite(yellowPin4, HIGH);
+      waitUntilstrobe2 += 40;
+    }
   }
   
   if (buttonPushCounterm == 6) {
     // Night rider mode
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(yellowPin3, HIGH);
-    delay(200);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(redPin1, HIGH);
-    delay(200);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(yellowPin4, HIGH);
-    delay(200);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(redPin2, HIGH);
-    delay(200);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(redPin1, LOW);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(yellowPin4, HIGH);
-    delay(200);
-    digitalWrite(yellowPin3, LOW);
-    digitalWrite(yellowPin4, LOW);
-    digitalWrite(redPin2, LOW);
-    digitalWrite(redPin1, HIGH);
-    delay(200);
+    if (millis() >= waitUntilnight1) {
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(yellowPin3, HIGH);
+      waitUntilnight1 += 600;
+    }
+    if (millis() >= waitUntilnight2) {
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(redPin1, HIGH);
+      waitUntilnight2 += 600;
+    }
+    if (millis() >= waitUntilnight3) {
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(yellowPin4, HIGH);
+      waitUntilnight3 += 600;
+    }
+    if (millis() >= waitUntilnight4) {
+      digitalWrite(redPin1, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(redPin2, HIGH);
+      waitUntilnight4 += 600;
+    }
+    if (millis() >= waitUntilnight5) {
+      digitalWrite(redPin2, LOW);
+      digitalWrite(redPin1, LOW);
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(yellowPin4, HIGH);
+      waitUntilnight5 += 600;
+    }
+    if (millis() >= waitUntilnight6) {
+      digitalWrite(yellowPin3, LOW);
+      digitalWrite(yellowPin4, LOW);
+      digitalWrite(redPin2, LOW);
+      digitalWrite(redPin1, HIGH);
+      waitUntilnight6 += 600;
+    }
   }
   
   if (buttonPushCounterm == 7) {
