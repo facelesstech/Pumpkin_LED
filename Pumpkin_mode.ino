@@ -2,13 +2,13 @@
 const int button1 = 12;
 
 // Variables will change:
-int buttonPushCounterm = 0;
-int buttonStatem = 0;
-int lastButtonStatem = 0;
-int redPin1 = 3;
-int redPin2 = 9;
-int yellowPin3 = 6;
-int yellowPin4 = 10;
+int buttonPushCounter1 = 0;    // counts the button pushes
+int buttonState1 = 0;    // tracks the button state
+int lastButtonState1 = 0;    // last state of the button
+int redPin1 = 3;    // redLED1
+int redPin2 = 9;    // redLED2
+int yellowPin3 = 6;    // yellowLED1
+int yellowPin4 = 10;    // yellowLED2
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
@@ -50,19 +50,19 @@ void setup() {
 
 void loop() {
   // read the pushbutton input pin:
- buttonStatem = digitalRead(button1); 
+ buttonState1 = digitalRead(button1); 
   // compare the buttonState to its previous state
-  if (buttonStatem != lastButtonStatem) {
+  if (buttonState1 != lastButtonState1) {
     // if the state has changed, increment the counter
-    if (buttonStatem == HIGH) {
+    if (buttonState1 == HIGH) {
       // if the current state is HIGH then the button
       // went from off to on:
-      buttonPushCounterm++;
-      if (buttonPushCounterm == 8) {
-        buttonPushCounterm = 1;}
+      buttonPushCounter1++;
+      if (buttonPushCounter1 == 8) {
+        buttonPushCounter1 = 1;}
       Serial.println("on");
       Serial.print("number of button pushes:  ");
-      Serial.println(buttonPushCounterm, DEC);
+      Serial.println(buttonPushCounter1, DEC);
     } 
     else {
       // if the current state is LOW then the button
@@ -72,9 +72,9 @@ void loop() {
   }
   // save the current state as the last state, 
   //for next time through the loop
-  lastButtonStatem = buttonStatem;
+  lastButtonState1 = buttonState1;
 
-  if (buttonPushCounterm == 1) {
+  if (buttonPushCounter1 == 1) {
      // Candle mode
      analogWrite(redPin1, random(10)+255);
      analogWrite(redPin2, random(10)+255);
@@ -82,7 +82,7 @@ void loop() {
      analogWrite(yellowPin4, random(10)+255);
    }
   
-  if (buttonPushCounterm == 2) {
+  if (buttonPushCounter1 == 2) {
     // Pulse mode
     if (millis() >= waitUntilpulse1) {
       analogWrite(redPin1, brightness);
@@ -108,7 +108,7 @@ void loop() {
     }   
   }
   
-  if (buttonPushCounterm == 3) {
+  if (buttonPushCounter1 == 3) {
     // Police flashing mode
     if (millis() >= waitUntilpolice1) {
       digitalWrite(redPin2, LOW);
@@ -126,7 +126,7 @@ void loop() {
     }
   }
   
-  if (buttonPushCounterm == 4) {
+  if (buttonPushCounter1 == 4) {
     // Chase mode
     if (millis() >= waitUntilchase1) {
       digitalWrite(redPin2, LOW);
@@ -158,7 +158,7 @@ void loop() {
     }
   }
   
-  if (buttonPushCounterm == 5) {
+  if (buttonPushCounter1 == 5) {
     // Strobe mode
     if (millis() >= waitUntilstrobe1) {
       digitalWrite(redPin1, LOW);
@@ -176,7 +176,7 @@ void loop() {
     }
   }
   
-  if (buttonPushCounterm == 6) {
+  if (buttonPushCounter1 == 6) {
     // Night rider mode
     if (millis() >= waitUntilnight1) {
       digitalWrite(yellowPin4, LOW);
@@ -222,7 +222,7 @@ void loop() {
     }
   }
   
-  if (buttonPushCounterm == 7) {
+  if (buttonPushCounter1 == 7) {
     // Off mode
     digitalWrite(redPin1, LOW);
     digitalWrite(redPin2, LOW);
