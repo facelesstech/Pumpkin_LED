@@ -12,6 +12,12 @@ int yellowPin4 = 10;    // yellowLED2
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
+// debounce stuff
+int buttonState;             // the current reading from the input pin
+int lastButtonState = LOW;
+long lastDebounceTime = 0;  // the last time the output pin was toggled
+long debounceDelay = 50;    // the debounce time; increase if the output flickers
+
 // long delays section
 long waitUntilpulse1 = 0;
 long waitUntilpulse2 = 20;
@@ -49,30 +55,39 @@ void setup() {
 }
 
 void loop() {
-  // read the pushbutton input pin:
- buttonState1 = digitalRead(button1); 
-  // compare the buttonState to its previous state
-  if (buttonState1 != lastButtonState1) {
-    // if the state has changed, increment the counter
-    if (buttonState1 == HIGH) {
-      // if the current state is HIGH then the button
-      // went from off to on:
-      buttonPushCounter1++;
-      if (buttonPushCounter1 == 8) {
-        buttonPushCounter1 = 1;}
-      Serial.println("on");
-      Serial.print("number of button pushes:  ");
-      Serial.println(buttonPushCounter1, DEC);
-    } 
-    else {
-      // if the current state is LOW then the button
-      // went from on to off:
-      Serial.println("off"); 
+  
+  int reading = digitalRead(button1);
+  buttonState1 = digitalRead(button1);
+
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();
+  } 
+  
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+
+    if (reading != buttonState) {
+      buttonState = reading;
+      
+        if (buttonState1 != lastButtonState1) {
+          
+          if (buttonState1 == HIGH) {
+            buttonPushCounter1++;
+            
+            if (buttonPushCounter1 == 8) {
+              buttonPushCounter1 = 1;}
+            Serial.println("on");
+            Serial.print("number of button pushes:  ");
+            Serial.println(buttonPushCounter1, DEC);
+          }
+          else {
+            Serial.println("off"); 
+          }
+        }
+          lastButtonState1 = buttonState1;
     }
   }
-  // save the current state as the last state, 
-  //for next time through the loop
-  lastButtonState1 = buttonState1;
+  lastButtonState = reading;
+
 
   if (buttonPushCounter1 == 1) {
      // Candle mode
